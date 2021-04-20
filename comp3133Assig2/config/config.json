@@ -1,0 +1,10 @@
+{
+  "development": {
+    "PORT": 3000,
+    "MONGO_URI": "mongodb+srv://hyunjun:wjstjf1443@cluster0.7abhc.mongodb.net/gbc_full_stack?retryWrites=true&w=majority"
+  },
+  "production": {
+    "PORT": 80,
+    ""
+  }
+}

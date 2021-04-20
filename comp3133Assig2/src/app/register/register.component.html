@@ -1,0 +1,84 @@
+<mat-card>
+  <mat-card-content>
+    <div class="header">
+      <h1>Create a new account</h1>
+    </div>
+    <form
+      (ngSubmit)="registerUser($event)"
+      name="registerForm"
+      [formGroup]="registerForm"
+    >
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            type="text"
+            autocomplete="off"
+            placeholder="Enter username"
+            required
+            id="username"
+          />
+          <mat-error *ngIf="!registerForm.controls['username'].valid">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="emailInput">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            type="text"
+            autocomplete="off"
+            placeholder="Enter email address"
+            required
+            id="email"
+          />
+          <mat-error *ngIf="!registerForm.controls['email'].valid">
+            Email is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            type="password"
+            autocomplete="off"
+            placeholder="Password"
+            required
+            id="password"
+          />
+          <mat-error *ngIf="!registerForm.controls['password'].valid">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            matInput
+            formControlName="cpassword"
+            type="password"
+            autocomplete="off"
+            placeholder="Confirm Password"
+            required
+            id="cpassword"
+          />
+          <mat-error *ngIf="!registerForm.controls['cpassword'].valid">
+            Confirm Password is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <button mat-flat-button color="primary" style="width: 90px">
+        Submit
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
