@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +11,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   hide: boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private service: LoginService
+  ) {}
 
   ngOnInit() {}
 
@@ -19,9 +25,25 @@ export class LoginComponent implements OnInit {
   });
 
   onLogin() {
-    if (!this.loginForm.valid) {
-      return;
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.value);
+      this.service.login(this.loginForm.value).subscribe(
+        (res) => {
+          let temp: any = res;
+          if (temp.result) {
+            this.router.navigate(['/register']);
+            console.log(temp);
+            localStorage.setItem('token', temp.token);
+          } else {
+          }
+        },
+        (err) => {
+          alert('Wrong email or password');
+          console.log(err);
+        }
+      );
+    } else {
+      this.loginForm.markAllAsTouched();
     }
-    console.log(this.loginForm.value);
   }
 }

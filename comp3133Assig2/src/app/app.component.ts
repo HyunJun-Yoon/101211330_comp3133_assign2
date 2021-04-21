@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'comp3133Assig2';
+  flag: boolean = false;
+  constructor(private router: Router, private service: LoginService) {
+    if (localStorage.getItem('token')) {
+      this.router.navigate(['/register']);
+    }
+    this.service.loginStatus.subscribe((res) => {
+      this.flag = res;
+    });
+  }
+  logout() {
+    localStorage.removeItem('token');
+    this.service.loginStatus.next(false);
+    this.router.navigate(['/login']);
+  }
 }
