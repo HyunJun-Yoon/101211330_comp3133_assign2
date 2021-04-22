@@ -1,1 +1,67 @@
-<p>dashboard works!</p>
+<mat-card>
+  <mat-card-content>
+    <div class="button-row">
+      <button (click)="getHotel()" mat-flat-button color="primary">
+        Show Hotel List
+      </button>
+    </div>
+    <br />
+    <mat-card *ngFor="let hotel of hotelList">
+      <mat-card-header>
+        <mat-card-title>
+          {{ hotel["hotel_name"] }}
+          <br />
+          <br />
+        </mat-card-title>
+        <mat-card-subtitle>
+          <p>
+            <strong>Address</strong>: {{ hotel["city"] }},
+            {{ hotel["street"] }},
+            {{ hotel["postal_code"] }}
+          </p>
+          <p><strong>Price</strong>: {{ hotel["price"] }}</p>
+          <p><strong>Email</strong>: {{ hotel["email"] }}</p>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <br />
+    </mat-card>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <div class="button-row">
+      <button (click)="getBooking()" mat-flat-button color="primary">
+        My Booking
+      </button>
+    </div>
+    <br />
+    <mat-card *ngFor="let hotel of BookedHotel">
+      <mat-card-header>
+        <mat-card-title>
+          {{ hotel["hotel_name"] }}
+          <br />
+          <br />
+        </mat-card-title>
+        <!-- <mat-card-subtitle>
+          <p>
+            <strong>Address</strong>: {{ hotel["city"] }},
+            {{ hotel["street"] }},
+            {{ hotel["postal_code"] }}
+          </p>
+          <p><strong>Price</strong>: {{ hotel["price"] }}</p>
+          <p><strong>Email</strong>: {{ hotel["email"] }}</p>
+        </mat-card-subtitle> -->
+      </mat-card-header>
+
+      <mat-card-content *ngFor="let booking of Bookings">
+        <ng-container *ngIf="booking['hotel_id'] == hotel['hotel_id']">
+          <p><strong>Booking Date: </strong>{{ booking["booking_date"] }}</p>
+          <p><strong>Check In : </strong>{{ booking["booking_start"] }}</p>
+          <p><strong>Check Out: </strong>{{ booking["booking_end"] }}</p>
+        </ng-container>
+      </mat-card-content>
+      <br />
+    </mat-card>
+  </mat-card-content>
+</mat-card>

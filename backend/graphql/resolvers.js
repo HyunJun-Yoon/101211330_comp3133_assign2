@@ -1,4 +1,5 @@
 const User = require('../models/users');
+const Hotel = require('../models/hotels');
 
 module.exports = {
   users: async function () {
@@ -23,6 +24,17 @@ module.exports = {
     return {
       ...addUser._doc,
       user_id: addUser.user_id.toString()
+    };
+  },
+  hotels: async function () {
+    const hotels = await Hotel.find();
+    return {
+      hotels: hotels.map(item => {
+        return {
+          ...item._doc,
+          hotel_id: item.hotel_id.toString()
+        };
+      })
     };
   }
 };

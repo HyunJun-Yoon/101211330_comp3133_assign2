@@ -12,7 +12,7 @@ export class AppComponent {
   flag: boolean = false;
   constructor(private router: Router, private service: LoginService) {
     if (localStorage.getItem('token')) {
-      this.router.navigate(['/register']);
+      this.router.navigate(['/dashboard']);
     }
     this.service.loginStatus.subscribe((res) => {
       this.flag = res;

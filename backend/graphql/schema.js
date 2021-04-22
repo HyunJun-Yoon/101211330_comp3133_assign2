@@ -7,6 +7,16 @@ module.exports = buildSchema(`
         password: String!
         email: String!
     }
+    type Hotel {
+        hotel_id: Int!
+        hotel_name: String!
+        street: String!
+        city: String!
+        postal_code: String!
+        price: Float!
+        email: String!
+        user_id: Int!
+    }
     type UserData {
         users: [User!]!
     }

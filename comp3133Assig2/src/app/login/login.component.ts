@@ -31,9 +31,10 @@ export class LoginComponent implements OnInit {
         (res) => {
           let temp: any = res;
           if (temp.result) {
-            this.router.navigate(['/register']);
+            this.router.navigate(['/dashboard']);
             console.log(temp);
             localStorage.setItem('token', temp.token);
+            localStorage.setItem('email', temp.email);
           } else {
           }
         },
