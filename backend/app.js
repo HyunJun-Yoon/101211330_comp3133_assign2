@@ -130,7 +130,6 @@ app.post('/getUser', (req, res) => {
 });
 
 app.get('/getHotel', (req, res, next) => {
-  console.log(Hotel.find({}));
   Hotel.find({}).then(result => {
     if (!result) {
       return res.status(401).json({

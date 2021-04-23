@@ -9,7 +9,6 @@ const BookingSchema = new mongoose.Schema({
   },
   booking_date: {
     type: String,
-    default: Date.now(),
     required: [true, 'Please eneter date of booking']
   },
   booking_start: {

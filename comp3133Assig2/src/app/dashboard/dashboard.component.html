@@ -1,30 +1,171 @@
 <mat-card>
   <mat-card-content>
-    <div class="button-row">
+    <!-- <div class="button-row">
       <button (click)="getHotel()" mat-flat-button color="primary">
         Show Hotel List
       </button>
-    </div>
+    </div> -->
+
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Search Hotel by Name</mat-label>
+        <input
+          matInput
+          class="form-control"
+          type="text"
+          name="hotelName"
+          [(ngModel)]="hotelName"
+          placeholder="Enter Hotel Name to search"
+        />
+      </mat-form-field>
+    </form>
     <br />
-    <mat-card *ngFor="let hotel of hotelList">
-      <mat-card-header>
-        <mat-card-title>
-          {{ hotel["hotel_name"] }}
+    <ng-container *ngIf="hotelName?.length <= 0; else searched">
+      <mat-card *ngFor="let hotel of hotelList">
+        <mat-card-header>
+          <mat-card-title>
+            {{ hotel["hotel_name"] }}
+            <br />
+            <br />
+          </mat-card-title>
+          <mat-card-subtitle>
+            <p>
+              <strong>Address</strong>: {{ hotel["city"] }},
+              {{ hotel["street"] }},
+              {{ hotel["postal_code"] }}
+            </p>
+            <p><strong>Price</strong>: {{ hotel["price"] }}</p>
+            <p><strong>Email</strong>: {{ hotel["email"] }}</p>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <div class="button-row" style="margin-left: 15px">
+          <a (click)="bookHotel(hotel)" mat-flat-button color="accent">
+            Book now
+          </a>
+        </div>
+        <br />
+        <div
+          *ngIf="
+            selectedHotel && selectedHotel['hotel_id'] == hotel['hotel_id']
+          "
+        >
+          <form (ngSubmit)="submit()" name="submit" [formGroup]="checkIn">
+            <mat-form-field
+              class="example-form-field"
+              appearance="fill"
+              style="margin-left: 15px"
+            >
+              <mat-label>First campaign</mat-label>
+              <mat-date-range-input
+                [formGroup]="checkIn"
+                [rangePicker]="datePicker"
+              >
+                <input
+                  matStartDate
+                  placeholder="Start date"
+                  formControlName="start"
+                />
+                <input
+                  matEndDate
+                  placeholder="End date"
+                  formControlName="end"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="datePicker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #datePicker></mat-date-range-picker>
+            </mat-form-field>
+            <div>
+              <button
+                mat-flat-button
+                color="primary"
+                style="width: 90px"
+                style="margin-left: 15px"
+                [routerLink]="['/dashboard']"
+              >
+                Complete Booking
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-card>
+    </ng-container>
+    <ng-template #searched>
+      <mat-card *ngFor="let hotel of hotelList">
+        <ng-container *ngIf="hotelName == hotel.hotel_name.toLowerCase()">
+          <mat-card-header>
+            <mat-card-title>
+              {{ hotel["hotel_name"] }}
+              <br />
+              <br />
+            </mat-card-title>
+            <mat-card-subtitle>
+              <p>
+                <strong>Address</strong>: {{ hotel["city"] }},
+                {{ hotel["street"] }},
+                {{ hotel["postal_code"] }}
+              </p>
+              <p><strong>Price</strong>: {{ hotel["price"] }}</p>
+              <p><strong>Email</strong>: {{ hotel["email"] }}</p>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <div class="button-row" style="margin-left: 15px">
+            <a (click)="bookHotel(hotel)" mat-flat-button color="accent">
+              Book now
+            </a>
+          </div>
           <br />
-          <br />
-        </mat-card-title>
-        <mat-card-subtitle>
-          <p>
-            <strong>Address</strong>: {{ hotel["city"] }},
-            {{ hotel["street"] }},
-            {{ hotel["postal_code"] }}
-          </p>
-          <p><strong>Price</strong>: {{ hotel["price"] }}</p>
-          <p><strong>Email</strong>: {{ hotel["email"] }}</p>
-        </mat-card-subtitle>
-      </mat-card-header>
-      <br />
-    </mat-card>
+          <div
+            *ngIf="
+              selectedHotel && selectedHotel['hotel_id'] == hotel['hotel_id']
+            "
+          >
+            <form (ngSubmit)="submit()" name="submit" [formGroup]="checkIn">
+              <mat-form-field
+                class="example-form-field"
+                appearance="fill"
+                style="margin-left: 15px"
+              >
+                <mat-label>First campaign</mat-label>
+                <mat-date-range-input
+                  [formGroup]="checkIn"
+                  [rangePicker]="datePicker"
+                >
+                  <input
+                    matStartDate
+                    placeholder="Start date"
+                    formControlName="start"
+                  />
+                  <input
+                    matEndDate
+                    placeholder="End date"
+                    formControlName="end"
+                  />
+                </mat-date-range-input>
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="datePicker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker #datePicker></mat-date-range-picker>
+              </mat-form-field>
+              <div>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  style="width: 90px"
+                  style="margin-left: 15px"
+                  [routerLink]="['/dashboard']"
+                >
+                  Complete Booking
+                </button>
+              </div>
+            </form>
+          </div>
+        </ng-container>
+      </mat-card>
+    </ng-template>
   </mat-card-content>
 </mat-card>
 
@@ -54,7 +195,10 @@
         </mat-card-subtitle> -->
       </mat-card-header>
 
-      <mat-card-content *ngFor="let booking of Bookings">
+      <mat-card-content
+        *ngFor="let booking of Bookings"
+        style="margin-left: 15px"
+      >
         <ng-container *ngIf="booking['hotel_id'] == hotel['hotel_id']">
           <p><strong>Booking Date: </strong>{{ booking["booking_date"] }}</p>
           <p><strong>Check In : </strong>{{ booking["booking_start"] }}</p>
